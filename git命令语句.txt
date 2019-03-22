@@ -1,0 +1,39 @@
+﻿git init
+ls -a
+start .git
+touch 1.py
+git status
+git status -s
+git add 1.py
+git add
+git commit -m "wrote a readme file"
+git commit -am "wrote a readme file"
+git log
+git log --oneline
+git log --oneline --graph分支
+git diff
+git diff --cached
+git diff HEAD
+git reset
+git reset --hard HEAD
+git reset --hard HEAD^
+git reset --hard HEAD~2
+git reset --hard ID
+git reflog
+git checkout ID -- 1.py
+Ctrl+ins  复制
+Shift+ins 粘贴
+git branch dev建立分支
+git branch -d删除分支
+git checkout -b dev建立分支
+git merge --no-f -m ID dev 将dev推送到master
+git push -u origin master
+远程仓库合并本地仓库
+git remote -v
+git fetch origin master
+git log -p master.. origin/master
+git merge origin/master
+关联远程仓库
+git clone git@github.com:michaelliao/gitskills.git
+cd gitskills
+ls
