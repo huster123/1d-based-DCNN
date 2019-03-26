@@ -6,7 +6,7 @@ from keras.models import load_model
 
 # 绘制制定unit的对比图象
 def DrawUnit(df, No, model):
-    test_input = df[df.unit == No].iloc[:, :-2].values.reshape((-1, 30, 14, 1))
+    test_input = df[df.unit == No].iloc[:, :-2].values.reshape((-1, 30, 15, 1))
     test_output = df[df.unit == No].iloc[:, -1].values.reshape(-1, )
     test_predict = model.predict(test_input)
     plt.figure(1, figsize=(15, 9))
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     for i in range(100):
         df1.append(df[df.unit == i + 1].iloc[-1, :-2].values)
         df2.append(df[df.unit == i + 1].iloc[-1, -1])
-    test_input = np.array(df1).reshape(-1, 30, 14, 1)
+    test_input = np.array(df1).reshape(-1, 30, 15, 1)
     test_output = np.array(df2).reshape(-1, )
     # 加载模型
     model = load_model('1dDCNNmodel.h5')

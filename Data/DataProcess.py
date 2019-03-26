@@ -11,7 +11,7 @@ df1 = pd.DataFrame(raw1, columns=['unit', 'cycles', 'operational setting 1', 'op
 df2 = pd.DataFrame(raw2, columns=['unit', 'cycles', 'operational setting 1', 'operational setting 2',
                                   'operational setting 3'] + ['sensor measurement' + str(i) for i in range(1, 22)])
 # 设定保留的传感器识数
-indices = ['sensor measurement' + str(i) for i in [2, 3, 4, 7, 8, 9, 11, 12, 13, 14, 15, 17, 20, 21]]
+indices = ['sensor measurement' + str(i) for i in [2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 15, 17, 20, 21]]
 # 剔除无意义的传感器识数
 df1 = df1.loc[:, ['unit', 'cycles'] + indices]
 df2 = df2.loc[:, ['unit', 'cycles'] + indices]
@@ -26,14 +26,14 @@ for i in range(df1.shape[0]):
     k = df1.loc[i, 'unit']
     m = df1.cycles[df1['unit'] == k].max()
     label1.append(m - df1.loc[i, 'cycles'] if (m - df1.loc[i, 'cycles']) < 125.0 else 125.0)
-    for j in range(14):
+    for j in range(15):
         df1.iloc[i, j + 2] = (df1.iloc[i, j + 2] - means[j]) / stds[j]
 for i in range(df2.shape[0]):
     k = df2.loc[i, 'unit']
     m = df2.cycles[df2.unit == k].max()
     label2.append(
         m - df2.loc[i, 'cycles'] + raw3[int(k - 1)] if (m - df2.loc[i, 'cycles'] + raw3[int(k - 1)]) < 125 else 125)
-    for j in range(14):
+    for j in range(15):
         df2.iloc[i, j + 2] = (df2.iloc[i, j + 2] - means[j]) / stds[j]
 
 df1['label'] = label1
@@ -50,12 +50,12 @@ for i in range(df1.shape[0] - 29):
     if df1.loc[i, 'unit'] == df1.loc[i + 29, 'unit']:
         slabel1.append(df1.loc[i + 29, 'label'])
         unit1.append(df1.loc[i + 29, 'unit'])
-        valu1.append(df1.iloc[i:i + 30, -15:-1].values.reshape(-1, ))
+        valu1.append(df1.iloc[i:i + 30, -16:-1].values.reshape(-1, ))
 for i in range(df2.shape[0] - 29):
     if df2.loc[i, 'unit'] == df2.loc[i + 29, 'unit']:
         slabel2.append(df2.loc[i + 29, 'label'])
         unit2.append(df2.loc[i + 29, 'unit'])
-        valu2.append(df2.iloc[i:i + 30, -15:-1].values.reshape(-1, ))
+        valu2.append(df2.iloc[i:i + 30, -16:-1].values.reshape(-1, ))
 # 时间序列数据转化为DataFrame格式
 valu1 = np.array(valu1)
 valu2 = np.array(valu2)

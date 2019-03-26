@@ -32,7 +32,7 @@ def score(x, y):
 if __name__ == '__main__':
     # 构建训练数据
     df = pd.read_pickle('Data/train_FD001.pickle')
-    train_input = df.iloc[:, :-2].values.reshape(-1, 30, 14, 1)
+    train_input = df.iloc[:, :-2].values.reshape(-1, 30, 15, 1)
     train_output = df.iloc[:, -1].values.reshape(-1, )
     # 构建测试数据
     df = pd.read_pickle('Data/test_FD001.pickle')
@@ -41,12 +41,12 @@ if __name__ == '__main__':
     for i in range(100):
         df1.append(df[df.unit == i + 1].iloc[-1, :-2].values)
         df2.append(df[df.unit == i + 1].iloc[-1, -1])
-    test_input = np.array(df1).reshape(-1, 30, 14, 1)
+    test_input = np.array(df1).reshape(-1, 30, 15, 1)
     test_output = np.array(df2).reshape(-1, )
     # 构建模型
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(10, 1), strides=(1, 1), padding='same', activation='tanh',
-                     input_shape=(30, 14, 1)))
+                     input_shape=(30, 15, 1)))
     # model.add(Dropout(0.5))
     # print('卷积1', model.output_shape)
     model.add(Conv2D(filters=10, kernel_size=(10, 1), strides=(1, 1), padding='same', activation='tanh'))
@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
     adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
     model.compile(loss='mse', optimizer=adam)
-    history2 = model.fit(train_input, train_output, batch_size=512, epochs=50, shuffle=True)
+    history2 = model.fit(train_input, train_output, validation_split=0.33, batch_size=512, epochs=50, shuffle=True)
     # 保存迭代损失值
     np.savetxt("iteration.txt", history1.history['loss'] + history2.history['loss'])
     # 绘制收敛曲线图
@@ -96,5 +96,3 @@ if __name__ == '__main__':
 
     np.savetxt("RMSE.txt", [RMSE])
     np.savetxt("SCORE.txt", [SCORE])
-
-
