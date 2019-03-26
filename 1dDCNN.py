@@ -53,10 +53,10 @@ if __name__ == '__main__':
     # model.add(Dropout(0.5))
     # print('卷积2', model.output_shape)
     model.add(Conv2D(filters=10, kernel_size=(10, 1), strides=(1, 1), padding='same', activation='tanh'))
-    # model.add(Dropout(0.5))
+    model.add(Dropout(0.5))
     # print('卷积3', model.output_shape)
     model.add(Conv2D(filters=10, kernel_size=(10, 1), strides=(1, 1), padding='same', activation='tanh'))
-    # model.add(Dropout(0.5))
+    model.add(Dropout(0.5))
     # print('卷积4', model.output_shape)
     model.add(Conv2D(filters=1, kernel_size=(3, 1), strides=(1, 1), padding='same', activation='tanh',
                      name='conv5'))  # 细节——第5层卷积层的卷积核为3*1，不是10*1
